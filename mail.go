@@ -9,14 +9,7 @@ func ListFor(report string) []string {
 	db, err := acxes.For(Host)
 	checkFor(err, "Connecting to database")
 	defer db.Close()
-	query := `
-		SELECT
-			email
-		FROM
-			mailing_list
-		WHERE
-			report = ?;
-	`
+	query := `call mailing_list_for(?);`
 	rows, err := db.Query(query, report)
 	defer rows.Close()
 	checkFor(err, "quering for results")
